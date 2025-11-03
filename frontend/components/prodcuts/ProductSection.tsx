@@ -162,7 +162,7 @@ export default function ProductSection() {
     const maxScrollLeft = el.scrollWidth - el.clientWidth;
     const current = el.scrollLeft;
 
-    let target =
+    const target =
       direction === "next"
         ? Math.min(current + step, maxScrollLeft)
         : Math.max(current - step, 0);

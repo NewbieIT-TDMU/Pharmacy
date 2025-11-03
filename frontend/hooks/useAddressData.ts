@@ -28,15 +28,23 @@ const useAddressData = () => {
   useEffect(() => {
     const fetchProvinces = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/provinces");
+        const res = await fetch("https://pharmacy-backend.onrender.com/api/provinces");
         const data = await res.json();
-        setProvinces(data);
+ 
+        if (Array.isArray(data)) {
+          setProvinces(data);
+        } else {
+          console.error("Dữ liệu trả về không phải mảng:", data);
+          setProvinces([]);
+        }
       } catch (err) {
         console.error("Lỗi khi tải danh sách tỉnh:", err);
+        setProvinces([]);
       }
     };
     fetchProvinces();
   }, []);
+
 
   useEffect(() => {
     if (!selectedProvince) {

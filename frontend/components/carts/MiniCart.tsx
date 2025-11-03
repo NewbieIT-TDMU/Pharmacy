@@ -5,11 +5,18 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
 
+interface Product {
+  image: string;
+  name: string;
+  price: number;
+}
+
 interface MiniCartProps {
   show: boolean;
-  product: any | null;
+  product: Product | null;
   onClose: () => void;
 }
+
 
 export default function MiniCart({ show, product, onClose }: MiniCartProps) {
   const router = useRouter();

@@ -3,8 +3,13 @@ import React, { useEffect, useState } from "react";
 import { Menu } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
+interface User {
+  name?: string;
+  email?: string;
+}
+
 export default function UserMenu() {
-  const [user, setUser] = useState<any>(null);
+ const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");

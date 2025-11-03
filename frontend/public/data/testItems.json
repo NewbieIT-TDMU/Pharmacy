@@ -1,0 +1,8 @@
+[
+  { "id": 1, "image": "/images/lungs.png", "title": "Đánh giá mực độ kiểm soát bệnh hen", "description": "Bắt đầu" },
+  { "id": 2, "image": "/images/heart.png", "title": "Bài kiểm tra nguy cơ mắc bệnh tim mạch", "description": "Bắt đầu" },
+  { "id": 3, "image": "/images/brain.png", "title": "Bài kiểm tra trí nhớ và mức độ tập chung chú ý", "description": "Bắt đầu" },
+  { "id": 4, "image": "/images/eye.png", "title": "Mắt", "description": "Kiểm tra" },
+  { "id": 5, "image": "/images/skin.png", "title": "Da liễu", "description": "Tư vấn" },
+  { "id": 6, "image": "/images/eye.png", "title": "Mắt", "description": "Kiểm tra" }
+]

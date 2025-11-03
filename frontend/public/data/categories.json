@@ -1,0 +1,14 @@
+[
+  { "icon": "Brain", "title": "Thần kinh não", "products": 55 },
+  { "icon": "Pill", "title": "Vitamin & Khoáng chất", "products": 110 },
+  { "icon": "HeartPulse", "title": "Sức khỏe tim mạch", "products": 23 },
+  { "icon": "Shield", "title": "Tăng sức đề kháng, miễn dịch", "products": 40 },
+  { "icon": "Stethoscope", "title": "Hỗ trợ tiêu hóa", "products": 64 },
+  { "icon": "Cross", "title": "Sinh lý - Nội tiết tố", "products": 39 },
+  { "icon": "Apple", "title": "Dinh dưỡng", "products": 37 },
+  { "icon": "Syringe", "title": "Hỗ trợ điều trị", "products": 119 },
+  { "icon": "Smile", "title": "Giải pháp làn da", "products": 93 },
+  { "icon": "User", "title": "Chăm sóc da mặt", "products": 212 },
+  { "icon": "User", "title": "Hỗ trợ làm đẹp", "products": 22 },
+  { "icon": "Heart", "title": "Hỗ trợ tình dục", "products": 41 }
+]

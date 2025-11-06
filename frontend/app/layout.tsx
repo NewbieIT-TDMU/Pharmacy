@@ -1,6 +1,8 @@
 import './globals.css';
+import type { ReactNode } from 'react';
 import Headers from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
+import ClientLayoutWrapper from "@/components/layout/ClientLayoutWrapper";
 
 export const metadata = {
   title: 'Nhà thuốc Benzen',
@@ -24,14 +26,13 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="vi">
-      <body className="bg-gray-100 min-h-screen flex flex-col"
-      cz-shortcut-listen="true">
-        <Headers />
-        <main className="flex-1">{children}</main>
-        <Footer />
+    <html lang="en">
+      <body suppressHydrationWarning>
+        <ClientLayoutWrapper>
+          {children}
+        </ClientLayoutWrapper>
       </body>
     </html>
   );

@@ -1,19 +1,21 @@
-import Sidebar from './compoments/Sidebar';
-import Header from './compoments/Header';
 import './admin.css';
+import Header from './compoments/Header';
+import Sidebar from './compoments/Sidebar';
+import ProductTable from './compoments/ProductTable';
 
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="admin-container">
-      <Sidebar />
-      <div className="admin-main">
+export const metadata = {
+  title: "Admin | Benzen",
+};
+
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  return ( 
+    <body>
+        
+        <main className='flex'>{children}</main>
         <Header />
-        <div className="admin-content">{children}</div>
-      </div>
-    </div>
+        <Sidebar />
+        <ProductTable />
+    </body>
+    
   );
 }

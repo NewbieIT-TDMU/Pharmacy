@@ -5,15 +5,14 @@ import { useParams } from "next/navigation";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
 
 interface Product {
+  _id: string;
   id: number;
   name: string;
+  desc: string;
   price: number;
-  description: string;
-  brand?: string;
   image: string;
-  usage?: string;
-  ingredients?: string[];
-  origin?: string;
+  unit: string;
+  discount: number;
 }
 
 export default function ProductDetailPage() {
@@ -31,8 +30,8 @@ export default function ProductDetailPage() {
         if (!res.ok) throw new Error("Không tìm thấy sản phẩm");
         const data = await res.json();
         setProduct(data);
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -41,15 +40,38 @@ export default function ProductDetailPage() {
     fetchProduct();
   }, [id]);
 
+  const addToCart = () => {
+    if (!product) return;
+
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    const existing = cart.find((item: any) => item.id === product.id);
+
+    if (existing) {
+      existing.quantity += quantity;
+    } else {
+      cart.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        unit: product.unit,
+        quantity,
+      });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert("Đã thêm vào giỏ hàng!");
+  };
+
   if (loading) return <div className="text-center py-10">Đang tải sản phẩm...</div>;
   if (!product) return <div className="text-center py-10">Không tìm thấy sản phẩm.</div>;
 
   return (
     <div className="container mx-auto px-6 py-10">
-      {/* Thông tin tổng quan */}
       <div className="grid md:grid-cols-2 gap-10">
-        {/* Hình ảnh sản phẩm */}
-        <div className="flex flex-col items-center">
+        
+        <div className="flex justify-center">
           <img
             src={product.image}
             alt={product.name}
@@ -57,17 +79,15 @@ export default function ProductDetailPage() {
           />
         </div>
 
-        {/* Chi tiết sản phẩm */}
         <div>
           <h1 className="text-3xl font-bold mb-3">{product.name}</h1>
-          {product.brand && (
-            <p className="text-gray-600 mb-2">
-              Thương hiệu: <span className="font-medium">{product.brand}</span>
-            </p>
-          )}
-          <p className="text-blue-600 text-2xl font-bold mb-4">
+          
+          <p className="text-blue-600 text-2xl font-bold mb-2">
             {product.price.toLocaleString()}₫
+            <span className="text-gray-600 text-sm ml-1">/ {product.unit}</span>
           </p>
+
+          <p className="text-gray-700 mb-6">{product.desc}</p>
 
           <div className="flex items-center mb-6">
             <button
@@ -85,46 +105,13 @@ export default function ProductDetailPage() {
             </button>
           </div>
 
-          <div className="flex gap-4">
-            <button className="bg-blue-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-blue-700 transition">
-              <ShoppingCart size={20} /> Thêm vào giỏ
-            </button>
-            <button className="border border-blue-600 text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition">
-              Mua ngay
-            </button>
-          </div>
+          <button
+            onClick={addToCart}
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-blue-700"
+          >
+            <ShoppingCart size={20} /> Thêm vào giỏ
+          </button>
         </div>
-      </div>
-
-      {/* Tabs mô tả sản phẩm */}
-      <div className="mt-12 border-t pt-6">
-        <h2 className="text-2xl font-semibold mb-4">Mô tả sản phẩm</h2>
-        <p className="text-gray-700 leading-relaxed">{product.description}</p>
-
-        {product.ingredients && (
-          <>
-            <h3 className="text-lg font-semibold mt-6">Thành phần</h3>
-            <ul className="list-disc pl-6 text-gray-700">
-              {product.ingredients.map((item, i) => (
-                <li key={i}>{item}</li>
-              ))}
-            </ul>
-          </>
-        )}
-
-        {product.usage && (
-          <>
-            <h3 className="text-lg font-semibold mt-6">Cách dùng</h3>
-            <p className="text-gray-700">{product.usage}</p>
-          </>
-        )}
-
-        {product.origin && (
-          <>
-            <h3 className="text-lg font-semibold mt-6">Xuất xứ</h3>
-            <p className="text-gray-700">{product.origin}</p>
-          </>
-        )}
       </div>
     </div>
   );

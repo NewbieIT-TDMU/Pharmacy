@@ -67,30 +67,49 @@ export default function ProductTable() {
   };
 
   return (
-    <div className="ml-64 mt-16 p-6">
-      <h2 className="text-2xl font-bold mb-4">Danh sách sản phẩm</h2>
-      <div className="flex items-center justify-between rounded mb-4">
-        <div className="flex items-center gap-3">
-          <input
-            className="border px-3 py-2 rounded w-80"
-            placeholder="Tìm sản phẩm..."
-            onChange={(e) => setSearch(e.target.value)}
-          />
+    <div className="p-4 md:p-6 lg:p-8 w-full max-w-full overflow-x-auto">
+      <h2 className="text-2xl font-bold mb-4">Danh sách sản phẩm </h2>
+      
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-3">
+        <div className="flex items-center gap-2 flex-1">
+          <div className="relative w-full md:w-80">
+            <input
+              className="border px-3 py-2 pr-10 rounded w-full border-gray-300 focus:ring-2 focus:ring-green-400 outline-none bg-white"
+              placeholder="Tìm sản phẩm..."
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>
+          </div>
+          
+
           <select
-            className="border px-3 py-2 rounded"
+            className="border px-3 py-2 rounded bg-white border-gray-300 focus:ring-2 focus:ring-green-400 outline-none"
             onChange={(e) => setUnit(e.target.value)}
           >
-            <option value="">Lọc</option>
-            <option value="Vỉ thuốc">Vỉ thuốc</option>
-            <option value="Hộp lớn">Hộp lớn</option>
-            <option value="Chai 100ml">Chai 100ml</option>
-            <option value="Gói nhỏ">Gói nhỏ</option>
+            <option value="">Đơn vị</option>
+            <option value="Vỉ">Vỉ</option>
+            <option value="Hộp">Hộp</option>
+            <option value="Chai">Chai</option>
+            <option value="Gói">Gói</option>
           </select>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <select
-            className="border px-2 py-1 rounded"
+            className="border px-2 py-1 rounded border-gray-300 focus:ring-2 focus:ring-green-400 outline-none bg-white"
             value={limit}
             onChange={(e) => {
               setLimit(Number(e.target.value));
@@ -108,124 +127,137 @@ export default function ProductTable() {
               setEditing(null);
               setShowForm(true);
             }}
-            className="bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2"
+            className="bg-green-600 text-white px-4 py-2 rounded flex items-center gap-2"
           >
-            <Plus size={18} /> Thêm
+            <Plus size={18} /> Thêm sản phẩm
           </button>
         </div>
       </div>
 
-      <table className="w-full bg-white shadow border">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="border p-2">Ảnh</th>
-            <th className="border p-2">Tên</th>
-            <th className="border p-2">Giá</th>
-            <th className="border p-2">Giảm</th>
-            <th className="border p-2">Đơn vị</th>
-            <th className="border p-2">Sửa</th>
-            <th className="border p-2">Xóa</th>
-          </tr>
-        </thead>
-        <tbody>
-          {display.map((p: any) => (
-            <tr key={p._id} className="hover:bg-gray-50">
-              <td className="border p-2 text-center">
-                <img
-                  src={p.image}
-                  className="w-14 h-14 object-cover rounded mx-auto"
-                />
-              </td>
-              <td className="border p-2">{p.name}</td>
-              <td className="border p-2 text-teal-600 font-semibold">
-                {(p.price - (p.price * p.discount) / 100).toLocaleString()}₫
-                {p.discount > 0 && (
-                  <span className="text-gray-400 line-through ml-1 text-sm">
-                    {p.price.toLocaleString()}₫
-                  </span>
-                )}
-              </td>
-              <td className="border p-2 text-center">{p.discount}%</td>
-              <td className="border p-2 text-center">{p.unit}</td>
-              <td className="border p-2 text-center">
-                <button
-                  className="text-blue-600"
-                  onClick={() => {
-                    setEditing(p);
-                    setShowForm(true);
-                  }}
-                >
-                  <Edit2 />
-                </button>
-              </td>
-              <td className="border p-2 text-center">
-                <button className="text-red-600" onClick={() => setDeleting(p)}>
-                  <Trash2 />
-                </button>
-              </td>
+      <div className="overflow-x-auto w-full">
+        <table className="min-w-full bg-white shadow border border-gray-300 table-auto">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="border p-2">Ảnh</th>
+              <th className="border p-2">Tên</th>
+              <th className="border p-2">Giá</th>
+              <th className="border p-2">Giảm</th>
+              <th className="border p-2">Đơn vị</th>
+              <th className="border p-2">Sửa</th>
+              <th className="border p-2">Xóa</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {display.map((p: any) => (
+              <tr key={p._id} className="hover:bg-gray-50 text-center">
+                <td className="border p-2">
+                  <img
+                    src={p.image}
+                    className="w-14 h-14 object-cover rounded mx-auto"
+                  />
+                </td>
+                <td className="border p-2">{p.name}</td>
+                <td className="border p-2 text-teal-600 font-semibold">
+                  {(p.price - (p.price * p.discount) / 100).toLocaleString()}₫
+                  {p.discount > 0 && (
+                    <span className="text-gray-400 line-through ml-1 text-sm">
+                      {p.price.toLocaleString()}₫
+                    </span>
+                  )}
+                </td>
+                <td className="border p-2">{p.discount}%</td>
+                <td className="border p-2">{p.unit}</td>
+                <td className="border p-2">
+                  <button
+                    className="text-blue-600"
+                    onClick={() => {
+                      setEditing(p);
+                      setShowForm(true);
+                    }}
+                  >
+                    <Edit2 />
+                  </button>
+                </td>
+                <td className="border p-2">
+                  <button className="text-red-600" onClick={() => setDeleting(p)}>
+                    <Trash2 />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      <div className="flex justify-center items-center p-3 rounded mt-4 flex-wrap gap-2">
-        <button
-          className="px-3 py-2 bg-white rounded disabled:opacity-50"
-          onClick={() => setPage(1)}
-          disabled={page === 1 || totalPages === 0}
-        >
-          ⏮
-        </button>
-        <button
-          className="px-3 py-2 bg-white rounded disabled:opacity-50"
-          onClick={() => setPage((p) => Math.max(1, p - 1))}
-          disabled={page === 1 || totalPages === 0}
-        >
-          ⬅
-        </button>
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center mt-4 gap-2 flex-wrap">
+          <button
+            className="px-2 py-1 bg-white border rounded disabled:opacity-50 border-gray-300"
+            onClick={() => setPage(1)}
+            disabled={page === 1}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
+            </svg>
 
-        {totalPages > 1 &&
-          getPageList(totalPages, page).map((item, idx) =>
+          </button>
+          <button
+            className="px-2 py-1 bg-white border rounded disabled:opacity-50 border-gray-300"
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+            </svg>
+
+          </button>
+
+          {getPageList(totalPages, page).map((item, idx) =>
             item === "..." ? (
-              <span key={`dot-${idx}`} className="px-2">
-                ...
-              </span>
+              <span key={`dot-${idx}`} className="px-2">...</span>
             ) : (
               <button
-                key={`page-${item}`}
+                key={`page-${item}-${idx}`}
                 onClick={() => setPage(item as number)}
-                className={`px-3 py-1 rounded border ${
-                  page === item
+                className={`px-3 py-1 rounded border ${page === item
                     ? "bg-green-600 text-white border-green-600"
                     : "bg-white border-gray-300"
-                }`}
+                  }`}
               >
                 {item}
               </button>
             )
           )}
 
-        <button
-          className="px-3 py-2 bg-white rounded disabled:opacity-50"
-          onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-          disabled={page === totalPages || totalPages === 0}
-        >
-          ➡
-        </button>
-        <button
-          className="px-3 py-2 bg-white rounded disabled:opacity-50"
-          onClick={() => setPage(totalPages)}
-          disabled={page === totalPages || totalPages === 0}
-        >
-          ⏭
-        </button>
-      </div>
+
+          <button
+            className="px-2 py-1 bg-white border rounded disabled:opacity-50 border-gray-300"
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+
+          </button>
+          <button
+            className="px-2 py-1 bg-white border rounded disabled:opacity-50 border-gray-300"
+            onClick={() => setPage(totalPages)}
+            disabled={page === totalPages}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+            </svg>
+
+          </button>
+        </div>
+      )}
 
       {showForm && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
           <form
             onSubmit={submit}
-            className="bg-white p-5 rounded-lg w-96 space-y-3"
+            className="bg-white p-5 rounded-lg w-full max-w-md space-y-3"
           >
             <h2 className="text-xl font-bold">
               {editing ? "Sửa sản phẩm" : "Thêm sản phẩm"}
@@ -279,10 +311,10 @@ export default function ProductTable() {
               defaultValue={editing?.unit}
               className="border p-2 w-full rounded"
             >
-              <option value="Vỉ thuốc">Vỉ thuốc</option>
-              <option value="Hộp lớn">Hộp lớn</option>
-              <option value="Chai 100ml">Chai 100ml</option>
-              <option value="Gói nhỏ">Gói nhỏ</option>
+              <option value="Vỉ">Vỉ</option>
+              <option value="Hộp">Hộp</option>
+              <option value="Chai">Chai</option>
+              <option value="Gói">Gói</option>
             </select>
             <div className="flex justify-end gap-2">
               <button
@@ -301,8 +333,8 @@ export default function ProductTable() {
       )}
 
       {deleting && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50">
-          <div className="bg-white p-5 rounded-lg w-80 text-center">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+          <div className="bg-white p-5 rounded-lg w-full max-w-sm text-center">
             <h2 className="text-xl font-bold mb-4">Xác nhận xóa</h2>
             <p className="mb-4">
               Bạn có chắc muốn xóa <strong>{deleting.name}</strong> không?

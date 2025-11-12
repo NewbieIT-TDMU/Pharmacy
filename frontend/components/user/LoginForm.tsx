@@ -2,7 +2,15 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
-import { XMarkIcon, EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import {
+  XMarkIcon,
+  EyeIcon,
+  EyeSlashIcon,
+  EnvelopeIcon, // For Email
+  ArrowRightOnRectangleIcon, // For Login Button
+  KeyIcon, // For Forgot Password
+  UserPlusIcon, // For Register
+} from "@heroicons/react/24/outline";
 import Image from "next/image";
 
 interface Props {
@@ -70,24 +78,30 @@ export default function LoginForm({ onChangeMode, onClose }: Props) {
         <h2 className="text-2xl font-bold mb-4 text-center">Đăng nhập</h2>
 
         <form onSubmit={handleLogin} className="space-y-3 py-4">
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full border border-gray-200 rounded-md p-2 focus:ring-2 focus:ring-green-600 outline-none bg-white"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <div className="relative">
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full border border-gray-200 rounded-md p-2 pl-10 focus:ring-2 focus:ring-green-600 outline-none bg-white" // Added pl-10 for icon
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <EnvelopeIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />{" "}
+            {/* Email Icon */}
+          </div>
 
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Mật khẩu"
-              className="w-full border border-gray-200 bg-white rounded-md p-2 focus:ring-2 focus:ring-green-600 outline-none pr-10"
+              className="w-full border border-gray-200 bg-white rounded-md p-2 pl-10 focus:ring-2 focus:ring-green-600 outline-none pr-10" // Added pl-10 for icon
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <KeyIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />{" "}
+            {/* Password/Key Icon */}
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
@@ -108,9 +122,15 @@ export default function LoginForm({ onChangeMode, onClose }: Props) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 disabled:opacity-60"
+            className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 disabled:opacity-60 flex items-center justify-center gap-2"
           >
-            {loading ? "Đang đăng nhập..." : "Đăng nhập"}
+            {loading ? (
+              "Đang đăng nhập..."
+            ) : (
+              <>
+                <ArrowRightOnRectangleIcon className="w-5 h-5" /> Đăng nhập
+              </>
+            )}
           </button>
         </form>
 
@@ -118,17 +138,17 @@ export default function LoginForm({ onChangeMode, onClose }: Props) {
         <div className="text-sm text-center mt-3">
           <button
             onClick={() => onChangeMode("forgot")}
-            className="text-blue-600 hover:underline"
+            className="text-blue-600 hover:underline flex items-center justify-center gap-1 mx-auto"
           >
-            Quên mật khẩu?
+            <KeyIcon className="w-4 h-4" /> Quên mật khẩu?
           </button>
-          <div className="mt-2">
+          <div className="mt-2 flex items-center justify-center gap-1">
             Bạn chưa có tài khoản?{" "}
             <button
               onClick={() => onChangeMode("register")}
-              className="text-blue-600 hover:underline"
+              className="text-blue-600 hover:underline flex items-center gap-1"
             >
-              Đăng ký
+              <UserPlusIcon className="w-4 h-4" /> Đăng ký
             </button>
           </div>
         </div>
